@@ -13,7 +13,7 @@ class Message {
    */
 
   static async create({from_username, to_username, body}) {
-    const result = await db.query(
+    const result = await db.query(password, 
         `INSERT INTO messages (
               from_username,
               to_username,
