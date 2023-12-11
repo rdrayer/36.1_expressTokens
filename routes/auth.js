@@ -38,17 +38,14 @@ router.post('/login', async function (req, res, next) {
  */
 router.post('/register', async function (req, res, next) {
     try {
-        let { username, password, first_name, last_name, phone } = req.body;
-        if (!username || !password || !first_name || !last_name || !phone) {
-            throw new ExpressError("please fill in all fields", 400)
-        }
-        if (await User.register(username, password, first_name, last_name, phone)) {
+        let { username } = await User.register(req.body);
             let token = jwt.sign({username}, SECRET_KEY);
             User.updateLoginTimestamp(username);
             return res.json({token});
-        }
     }
     catch (e) {
         return next(e);
     }
-})
+});
+
+module.exports = router;
